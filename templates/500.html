@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Ошибка сервера - PHOTO STUDIES{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="py-20 md:py-32 px-4 bg-cream">
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 reveal">
+            <span class="text-6xl md:text-8xl lg:text-9xl block mb-4 text-red-500">500</span>
+            Ошибка сервера
+        </h1>
+        <p class="text-text-light text-lg md:text-xl reveal">
+            Что-то пошло не так. Мы уже работаем над исправлением проблемы.
+        </p>
+        <div class="mt-12 reveal">
+            <a href="/" class="btn-hover inline-block px-8 py-4 bg-accent text-white rounded-full text-lg font-bold">
+                Вернуться на главную
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Error Details -->
+<section class="py-20 md:py-32 px-4 bg-white">
+    <div class="max-w-6xl mx-auto text-center">
+        <div class="w-64 h-64 mx-auto mb-8 reveal">
+            <svg class="w-full h-full text-red-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal">
+            <div class="text-center">
+                <h3 class="font-heading text-xl font-bold mb-2 text-red-500">Мы в курсе</h3>
+                <p class="text-text-light text-sm">Наша команда уже работает над решением проблемы</p>
+            </div>
+            <div class="text-center">
+                <h3 class="font-heading text-xl font-bold mb-2 text-red-500">Попробуйте позже</h3>
+                <p class="text-text-light text-sm">Повторите попытку через несколько минут</p>
+            </div>
+            <div class="text-center">
+                <h3 class="font-heading text-xl font-bold mb-2 text-red-500">Свяжитесь с нами</h3>
+                <p class="text-text-light text-sm">Если проблема не исчезла, напишите нам</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Developer Info -->
+<section class="py-20 md:py-32 px-4 bg-cream">
+    <div class="max-w-2xl mx-auto text-center">
+        <h2 class="font-heading text-3xl font-bold mb-6 reveal">Техническая информация</h2>
+        <div class="bg-white rounded-2xl p-8 shadow-lg reveal">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <p class="text-sm text-text-light mb-2">Время ошибки:</p>
+                    <p class="font-medium text-text">{{ current_time }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-text-light mb-2">Код ошибки:</p>
+                    <p class="font-medium text-text">500 Internal Server Error</p>
+                </div>
+                <div>
+                    <p class="text-sm text-text-light mb-2">Запрос:</p>
+                    <p class="font-medium text-text">{{ request.path }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-text-light mb-2">Метод:</p>
+                    <p class="font-medium text-text">{{ request.method }}</p>
+                </div>
+            </div>
+            <p class="text-text-light text-sm">
+                Если вы видите эту ошибку часто, пожалуйста, сообщите нам об этом. 
+                Включите как можно больше деталей, чтобы мы могли быстрее решить проблему.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Анимация для 500 страницы
+document.addEventListener('DOMContentLoaded', function() {
+    const numbers = document.querySelector('.text-6xl');
+    if (numbers) {
+        numbers.style.animation = 'shake 1s ease-in-out';
+    }
+});
+
+// Анимация shake
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

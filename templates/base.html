@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PHOTO STUDIES - профессиональные фотосессии в Москве. Индивидуальные, love story, семейные съёмки.">
+    <meta name="keywords" content="фотосессия, фотостудия, Москва, съёмка, love story, семейная фотосессия">
+    <meta name="author" content="PHOTO STUDIES">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="PHOTO STUDIES - Профессиональные фотосессии">
+    <meta property="og:description" content="Закажите профессиональную фотосессию в Москве">
+    <meta property="og:type" content="website">
+
+    <title>{% block title %}PHOTO STUDIES{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'cream': '#F8F5F2',
+                        'accent': '#D6BFA7',
+                        'accent-dark': '#C5A896',
+                        'text': '#1A1A1A',
+                        'text-light': '#6B6B6B',
+                    },
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <style>
+        /* Глобальные стили */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            background-color: #F8F5F2;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-scale-in {
+            animation: scaleIn 0.5s ease-out forwards;
+        }
+
+        /* Intersection Observer анимации */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hover эффекты */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(214, 191, 167, 0.3);
+        }
+
+        /* Sticky navbar */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background-color: rgba(248, 245, 242, 0.95);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Toast уведомления */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 9998;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-success {
+            background-color: #10B981;
+            color: white;
+        }
+
+        .toast-error {
+            background-color: #EF4444;
+            color: white;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid rgba(214, 191, 167, 0.3);
+            border-top: 3px solid #D6BFA7;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Скрытие скроллбара но функциональность */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 border-b border-gray-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <a href="/" class="font-heading text-2xl md:text-3xl font-bold tracking-tight">
+                    PHOTO STUDIES
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-sm font-medium hover:text-accent transition-colors">Главная</a>
+                    <a href="/portfolio" class="nav-link text-sm font-medium hover:text-accent transition-colors">Портфолио</a>
+                    <a href="/booking" class="nav-link text-sm font-medium hover:text-accent transition-colors">Запись</a>
+                    <a href="/contacts" class="nav-link text-sm font-medium hover:text-accent transition-colors">Контакты</a>
+                    <a href="/booking" class="btn-hover px-6 py-2.5 bg-accent text-white rounded-full text-sm font-medium">
+                        Записаться
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Открыть меню">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-80 h-full bg-cream shadow-2xl md:hidden">
+            <div class="p-6">
+                <button id="close-menu-btn" class="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Закрыть меню">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+
+                <div class="mt-12 space-y-6">
+                    <a href="/" class="block text-lg font-medium hover:text-accent transition-colors mobile-link">Главная</a>
+                    <a href="/portfolio" class="block text-lg font-medium hover:text-accent transition-colors mobile-link">Портфолио</a>
+                    <a href="/booking" class="block text-lg font-medium hover:text-accent transition-colors mobile-link">Запись</a>
+                    <a href="/contacts" class="block text-lg font-medium hover:text-accent transition-colors mobile-link">Контакты</a>
+                    <a href="/booking" class="block w-full text-center px-6 py-3 bg-accent text-white rounded-full font-medium btn-hover mt-8">
+                        Записаться
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-cream border-t border-gray-200 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Logo & Description -->
+                <div>
+                    <h3 class="font-heading text-2xl font-bold mb-4">PHOTO STUDIES</h3>
+                    <p class="text-text-light text-sm leading-relaxed">
+                        Профессиональные фотосессии в Москве. Создаём яркие и запоминающиеся моменты вашей жизни.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Навигация</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-text-light hover:text-accent transition-colors text-sm">Главная</a></li>
+                        <li><a href="/portfolio" class="text-text-light hover:text-accent transition-colors text-sm">Портфолио</a></li>
+                        <li><a href="/booking" class="text-text-light hover:text-accent transition-colors text-sm">Запись</a></li>
+                        <li><a href="/contacts" class="text-text-light hover:text-accent transition-colors text-sm">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="font-semibold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-sm text-text-light">
+                        <li>Москва</li>
+                        <li><a href="tel:+79951234567" class="hover:text-accent transition-colors">+7 (995) 123-45-67</a></li>
+                        <li><a href="mailto:svetmoment@gmail.com" class="hover:text-accent transition-colors">svetmoment@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-sm text-text-light">
+                <p>&copy; 2024 PHOTO STUDIES. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

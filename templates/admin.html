@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+
+{% block title %}PHOTO STUDIES - Админка{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="py-20 md:py-32 px-4 bg-cream">
+    <div class="max-w-7xl mx-auto text-center">
+        <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 reveal">Админка</h1>
+        <p class="text-text-light text-lg md:text-xl reveal">
+            Просмотр и управление заявками на фотосессии
+        </p>
+    </div>
+</section>
+
+<!-- Admin Section -->
+<section class="py-12 md:py-20 px-4 bg-white">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Admin Header -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 reveal">
+            <div>
+                <h2 class="font-heading text-2xl font-bold mb-2">Заявки</h2>
+                <p class="text-text-light text-sm">Всего заявок: <span id="total-count">0</span></p>
+            </div>
+            <div class="flex gap-3 mt-4 md:mt-0">
+                <button onclick="loadBookings()" class="btn-hover px-6 py-2.5 bg-accent text-white rounded-full font-medium text-sm">
+                    Обновить
+                </button>
+                <button onclick="exportCSV()" class="btn-hover px-6 py-2.5 bg-cream text-text border border-gray-200 rounded-full font-medium text-sm hover:bg-accent hover:text-white transition-all">
+                    Экспорт CSV
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="text-center py-12">
+            <div class="spinner mx-auto mb-4"></div>
+            <p class="text-text-light">Загрузка заявок...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="hidden text-center py-12">
+            <p class="text-red-500 text-lg mb-4">Ошибка загрузки заявок</p>
+            <button onclick="loadBookings()" class="btn-hover px-6 py-2.5 bg-accent text-white rounded-full font-medium">
+                Попробовать снова
+            </button>
+        </div>
+
+        <!-- Bookings Table -->
+        <div id="bookings-container" class="hidden overflow-x-auto rounded-2xl border border-gray-200 reveal">
+            <table class="w-full">
+                <thead class="bg-cream">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">ID</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Имя</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Телефон</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Email</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Тип съёмки</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Дата</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Комментарий</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Дата создания</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-text">Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="bookings-table-body" class="divide-y divide-gray-200">
+                    <!-- Bookings will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-12">
+            <div class="w-20 h-20 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
+                <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.217a.75.75 0 00-.712 1.28l.288.474c.53.87.757 1.929.757 3.009 0 2.504-1.635 4.248-4.099 4.248-.817 0-1.574-.38-2.09-1.008l-.283-.474A.75.75 0 0011 18.217V20h2.217a.75.75 0 00.712-1.28l-.288-.474a2.25 2.25 0 01-.757-3.009c0-1.63.863-2.753 2.099-2.753.817 0 1.574.38 2.09 1.008l.283.474A.75.75 0 0015 18.217V20h-2.217z"/>
+                </svg>
+            </div>
+            <h3 class="font-heading text-2xl font-bold mb-2">Заявок пока нет</h3>
+            <p class="text-text-light">Когда появятся заявки, они отобразятся здесь</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Delete Confirmation Modal -->
+<div id="delete-modal" class="lightbox" onclick="closeDeleteModal(event)">
+    <div class="relative max-w-md mx-auto p-6 bg-white rounded-2xl shadow-2xl">
+        <h3 class="font-heading text-2xl font-bold mb-4">Подтверждение</h3>
+        <p class="text-text-light mb-6">Вы уверены, что хотите удалить эту заявку? Это действие нельзя отменить.</p>
+        <div class="flex gap-4">
+            <button onclick="closeDeleteModal()" class="flex-1 py-3 bg-cream text-text rounded-full font-medium hover:bg-gray-200 transition-all">
+                Отмена
+            </button>
+            <button id="confirm-delete-btn" class="flex-1 py-3 bg-red-500 text-white rounded-full font-medium hover:bg-red-600 transition-all">
+                Удалить
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let bookingsData = [];
+let deleteBookingId = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadBookings();
+});
+
+/**
+ * Загрузка заявок с сервера
+ */
+async function loadBookings() {
+    const loadingState = document.getElementById('loading-state');
+    const errorState = document.getElementById('error-state');
+    const bookingsContainer = document.getElementById('bookings-container');
+    const emptyState = document.getElementById('empty-state');
+    const totalCount = document.getElementById('total-count');
+
+    // Показываем загрузку
+    loadingState.classList.remove('hidden');
+    errorState.classList.add('hidden');
+    bookingsContainer.classList.add('hidden');
+    emptyState.classList.add('hidden');
+
+    try {
+        // Запрос с паролем (в реальном проекте использовать нормальную аутентификацию)
+        const response = await fetch('/api/bookings?key=admin123');
+
+        if (!response.ok) {
+            if (response.status === 403) {
+                alert('Доступ запрещён. Неверный ключ.');
+                return;
+            }
+            throw new Error('Ошибка загрузки');
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.bookings) {
+            bookingsData = data.bookings;
+            totalCount.textContent = bookingsData.length;
+
+            if (bookingsData.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                renderBookings(bookingsData);
+                bookingsContainer.classList.remove('hidden');
+            }
+        } else {
+            throw new Error('Некорректные данные');
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки заявок:', error);
+        errorState.classList.remove('hidden');
+    } finally {
+        loadingState.classList.add('hidden');
+    }
+}
+
+/**
+ * Отрисовка таблицы заявок
+ */
+function renderBookings(bookings) {
+    const tbody = document.getElementById('bookings-table-body');
+
+    tbody.innerHTML = bookings.map(booking => `
+        <tr class="hover:bg-cream/50 transition-colors">
+            <td class="px-6 py-4 text-sm text-text-light">${booking.id}</td>
+            <td class="px-6 py-4 text-sm font-medium text-text">${escapeHtml(booking.name)}</td>
+            <td class="px-6 py-4 text-sm text-text">
+                <a href="tel:${escapeHtml(booking.phone)}" class="text-accent hover:underline">${escapeHtml(booking.phone)}</a>
+            </td>
+            <td class="px-6 py-4 text-sm text-text">
+                <a href="mailto:${escapeHtml(booking.email)}" class="text-accent hover:underline">${escapeHtml(booking.email)}</a>
+            </td>
+            <td class="px-6 py-4 text-sm text-text">${escapeHtml(booking.service)}</td>
+            <td class="px-6 py-4 text-sm text-text">${formatDate(booking.date)}</td>
+            <td class="px-6 py-4 text-sm text-text-light max-w-xs truncate" title="${escapeHtml(booking.comment || '')}">
+                ${escapeHtml(booking.comment || '-')}
+            </td>
+            <td class="px-6 py-4 text-sm text-text-light">${formatDateTime(booking.created_at)}</td>
+            <td class="px-6 py-4">
+                <button onclick="confirmDelete(${booking.id})" class="text-red-500 hover:text-red-700 transition-colors" aria-label="Удалить заявку">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+/**
+ * Подтверждение удаления
+ */
+function confirmDelete(bookingId) {
+    deleteBookingId = bookingId;
+    const modal = document.getElementById('delete-modal');
+    modal.classList.add('active');
+}
+
+/**
+ * Закрытие модального окна удаления
+ */
+function closeDeleteModal(event) {
+    if (event && event.target.closest('#confirm-delete-btn')) {
+        return;
+    }
+
+    const modal = document.getElementById('delete-modal');
+    modal.classList.remove('active');
+    deleteBookingId = null;
+}
+
+/**
+ * Удаление заявки
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmBtn = document.getElementById('confirm-delete-btn');
+
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', async function() {
+            if (!deleteBookingId) return;
+
+            try {
+                // В реальном проекте нужен отдельный endpoint для удаления
+                // Пока просто перезагружаем список с сообщением
+                alert('Функция удаления заявок требует отдельного API endpoint. Для демо перезагрузите страницу.');
+                closeDeleteModal();
+            } catch (error) {
+                console.error('Ошибка удаления:', error);
+                alert('Ошибка при удалении заявки');
+            }
+        });
+    }
+});
+
+/**
+ * Экспорт в CSV
+ */
+function exportCSV() {
+    if (bookingsData.length === 0) {
+        alert('Нет данных для экспорта');
+        return;
+    }
+
+    // Заголовки CSV
+    const headers = ['ID', 'Имя', 'Телефон', 'Email', 'Тип съёмки', 'Дата', 'Комментарий', 'Дата создания'];
+    const csvContent = [
+        headers.join(','),
+        ...bookingsData.map(booking => [
+            booking.id,
+            `"${booking.name.replace(/"/g, '""')}"`,
+            `"${booking.phone.replace(/"/g, '""')}"`,
+            `"${booking.email.replace(/"/g, '""')}"`,
+            `"${booking.service.replace(/"/g, '""')}"`,
+            booking.date,
+            `"${(booking.comment || '').replace(/"/g, '""')}"`,
+            booking.created_at
+        ].join(','))
+    ].join('\n');
+
+    // Создание и скачивание файла
+    const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', `bookings_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+/**
+ * Форматирование даты
+ */
+function formatDate(dateString) {
+    const date = new Date(dateString + 'T00:00:00');
+    return date.toLocaleDateString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+}
+
+/**
+ * Форматирование даты и времени
+ */
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+/**
+ * Экранирование HTML для безопасности
+ */
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+
+{% endblock %}

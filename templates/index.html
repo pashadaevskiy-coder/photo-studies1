@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+
+{% block title %}PHOTO STUDIES - Профессиональные фотосессии{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1920&q=80"
+             alt="Фотосессия"
+             class="w-full h-full object-cover"
+             loading="eager">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-cream"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 text-center text-white px-4 max-w-5xl mx-auto">
+        <h1 class="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in-up" style="animation-delay: 0.2s">
+            Профессиональные фотосессии
+        </h1>
+        <p class="text-lg md:text-xl lg:text-2xl font-light mb-10 max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.4s">
+            Запечатлите самые важные моменты вашей жизни с талантливыми фотографами в Москве
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.6s">
+            <a href="/booking" class="btn-hover px-8 py-4 bg-accent text-white rounded-full text-lg font-medium">
+                Записаться
+            </a>
+            <a href="/portfolio" class="btn-hover px-8 py-4 bg-white/20 backdrop-blur-sm text-white border-2 border-white rounded-full text-lg font-medium hover:bg-white hover:text-text transition-all">
+                Портфолио
+            </a>
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 40">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+    </div>
+</section>
+
+<!-- Advantages Section -->
+<section class="py-20 md:py-32 px-4 bg-cream">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Почему выбирают нас</h2>
+            <p class="text-text-light max-w-2xl mx-auto">Мы создаём не просто фотографии, а воспоминания, которые будут с вами всю жизнь</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Advantage 1 -->
+            <div class="card-hover bg-white p-8 rounded-2xl text-center reveal">
+                <div class="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-heading text-xl font-semibold mb-3">Опытные фотографы</h3>
+                <p class="text-text-light text-sm leading-relaxed">Профессионалы с более чем 5-летним опытом в портретной и событийной фотографии</p>
+            </div>
+
+            <!-- Advantage 2 -->
+            <div class="card-hover bg-white p-8 rounded-2xl text-center reveal" style="animation-delay: 0.1s">
+                <div class="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-heading text-xl font-semibold mb-3">Лучшее оборудование</h3>
+                <p class="text-text-light text-sm leading-relaxed">Используем профессиональные камеры и свет от ведущих мировых брендов</p>
+            </div>
+
+            <!-- Advantage 3 -->
+            <div class="card-hover bg-white p-8 rounded-2xl text-center reveal" style="animation-delay: 0.2s">
+                <div class="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-heading text-xl font-semibold mb-3">Индивидуальный подход</h3>
+                <p class="text-text-light text-sm leading-relaxed">Каждая съёмка уникальна. Мы учитываем все ваши пожелания и характер</p>
+            </div>
+
+            <!-- Advantage 4 -->
+            <div class="card-hover bg-white p-8 rounded-2xl text-center reveal" style="animation-delay: 0.3s">
+                <div class="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-heading text-xl font-semibold mb-3">Быстрая обработка</h3>
+                <p class="text-text-light text-sm leading-relaxed">Готовые фотографии в течение 7 дней с профессиональной ретушью</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-20 md:py-32 px-4 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Наши услуги</h2>
+            <p class="text-text-light max-w-2xl mx-auto">Выберите подходящий пакет для вашей фотосессии</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Mini Package -->
+            <div class="card-hover bg-cream rounded-2xl p-8 border-2 border-transparent hover:border-accent reveal">
+                <div class="text-center">
+                    <h3 class="font-heading text-2xl font-bold mb-2">Мини</h3>
+                    <p class="text-text-light mb-6">Идеально для обновления портфолио</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">15</span>
+                        <span class="text-text-light"> фотографий</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-text-light">
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            1 час съёмки
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Базовая ретушь
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Онлайн-галерея
+                        </li>
+                    </ul>
+                    <a href="/booking?service=Мини" class="block w-full py-3 bg-accent text-white rounded-full font-medium text-center btn-hover">
+                        Записаться
+                    </a>
+                </div>
+            </div>
+
+            <!-- Standard Package -->
+            <div class="card-hover bg-white rounded-2xl p-8 border-2 border-accent relative reveal" style="animation-delay: 0.1s">
+                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-accent text-white text-sm font-medium rounded-full">
+                    Популярный
+                </div>
+                <div class="text-center">
+                    <h3 class="font-heading text-2xl font-bold mb-2">Стандарт</h3>
+                    <p class="text-text-light mb-6">Для полноценной фотосессии</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">30</span>
+                        <span class="text-text-light"> фотографий</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-text-light">
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            2 часа съёмки
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Профессиональная ретушь
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Онлайн-галерея + печать 10 фото
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Консультация по подготовке
+                        </li>
+                    </ul>
+                    <a href="/booking?service=Стандарт" class="block w-full py-3 bg-accent text-white rounded-full font-medium text-center btn-hover">
+                        Записаться
+                    </a>
+                </div>
+            </div>
+
+            <!-- Premium Package -->
+            <div class="card-hover bg-cream rounded-2xl p-8 border-2 border-transparent hover:border-accent reveal" style="animation-delay: 0.2s">
+                <div class="text-center">
+                    <h3 class="font-heading text-2xl font-bold mb-2">Премиум</h3>
+                    <p class="text-text-light mb-6">Полный пакет для идеальных снимков</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">60</span>
+                        <span class="text-text-light"> фотографий</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-text-light">
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            4 часа съёмки
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Премиум ретушь + цветокоррекция
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Все фото в исходниках (RAW)
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Фотоальбом 20x20 см
+                        </li>
+                        <li class="flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Приоритетное бронирование
+                        </li>
+                    </ul>
+                    <a href="/booking?service=Премиум" class="block w-full py-3 bg-accent text-white rounded-full font-medium text-center btn-hover">
+                        Записаться
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Preview Section -->
+<section class="py-20 md:py-32 px-4 bg-cream">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+            <div>
+                <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Наши работы</h2>
+                <p class="text-text-light">Подборка лучших фотографий из наших съёмок</p>
+            </div>
+            <a href="/portfolio" class="btn-hover px-6 py-3 bg-accent text-white rounded-full font-medium mt-4 md:mt-0">
+                Смотреть всё
+            </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="portfolio-preview">
+            <!-- Portfolio items will be loaded via JS -->
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-20 md:py-32 px-4 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Отзывы клиентов</h2>
+            <p class="text-text-light max-w-2xl mx-auto">Что говорят наши клиенты о работе с нами</p>
+        </div>
+
+        <div class="testimonial-slider relative max-w-4xl mx-auto" id="testimonial-slider">
+            <div class="overflow-hidden">
+                <div class="testimonial-track flex transition-transform duration-500" id="testimonial-track">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-slide w-full flex-shrink-0 px-4">
+                        <div class="bg-cream rounded-2xl p-8 md:p-12 text-center reveal">
+                            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
+                                <span class="text-3xl">👩</span>
+                            </div>
+                            <p class="text-lg md:text-xl leading-relaxed mb-6 font-light">
+                                "Фантастическая работа! Фотографии получились просто волшебными. Очень довольна результатом, всем рекомендую!"
+                            </p>
+                            <div class="font-semibold">Анна Петрова</div>
+                            <div class="text-sm text-text-light mt-1">Индивидуальная съёмка</div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-slide w-full flex-shrink-0 px-4">
+                        <div class="bg-cream rounded-2xl p-8 md:p-12 text-center reveal">
+                            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
+                                <span class="text-3xl">👨‍👩‍👧</span>
+                            </div>
+                            <p class="text-lg md:text-xl leading-relaxed mb-6 font-light">
+                                "Снимали семейную фотосессию. Фотографы очень внимательные, умеют найти подход к детям. Снимки получились тёплыми и душевными."
+                            </p>
+                            <div class="font-semibold">Семья Ивановых</div>
+                            <div class="text-sm text-text-light mt-1">Семейная съёмка</div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-slide w-full flex-shrink-0 px-4">
+                        <div class="bg-cream rounded-2xl p-8 md:p-12 text-center reveal">
+                            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
+                                <span class="text-3xl">💑</span>
+                            </div>
+                            <p class="text-lg md:text-xl leading-relaxed mb-6 font-light">
+                                "Наша love story снята просто идеально! Каждая фотография рассказывает историю нашей любви. Спасибо за прекрасный подарок!"
+                            </p>
+                            <div class="font-semibold">Дмитрий & Елена</div>
+                            <div class="text-sm text-text-light mt-1">Love Story</div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-slide w-full flex-shrink-0 px-4">
+                        <div class="bg-cream rounded-2xl p-8 md:p-12 text-center reveal">
+                            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
+                                <span class="text-3xl">🤰</span>
+                            </div>
+                            <p class="text-lg md:text-xl leading-relaxed mb-6 font-light">
+                                "Беременная фотосессия — это было невероятно! Аккуратно, профессионально, с душой. Ждём фото с нетерпением!"
+                            </p>
+                            <div class="font-semibold">Мария & Алексей</div>
+                            <div class="text-sm text-text-light mt-1">Портретная съёмка</div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-slide w-full flex-shrink-0 px-4">
+                        <div class="bg-cream rounded-2xl p-8 md:p-12 text-center reveal">
+                            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
+                                <span class="text-3xl">🎓</span>
+                            </div>
+                            <p class="text-lg md:text-xl leading-relaxed mb-6 font-light">
+                                "Фото на выпускной получились просто потрясающими! Каждая картинка — это эмоции и воспоминания. Отличная работа!"
+                            </p>
+                            <div class="font-semibold">Выпускник 2024</div>
+                            <div class="text-sm text-text-light mt-1">Событийная съёмка</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation arrows -->
+            <button id="prev-testimonial" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-accent hover:text-white transition-all" aria-label="Предыдущий отзыв">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button id="next-testimonial" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-accent hover:text-white transition-all" aria-label="Следующий отзыв">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+
+            <!-- Dots indicator -->
+            <div class="flex justify-center gap-2 mt-8" id="testimonial-dots"></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 md:py-32 px-4 bg-accent">
+    <div class="max-w-4xl mx-auto text-center text-white">
+        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+            Готовы создать прекрасные воспоминания?
+        </h2>
+        <p class="text-lg md:text-xl mb-10 opacity-90">
+            Запишитесь на фотосессию уже сегодня и получите бесплатную консультацию по подготовке
+        </p>
+        <a href="/booking" class="btn-hover inline-block px-10 py-4 bg-white text-accent rounded-full text-lg font-bold">
+            Записаться сейчас
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Загрузка портфолио для превью
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/portfolio')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.items) {
+                const container = document.getElementById('portfolio-preview');
+                // Берём первые 8 изображений
+                const items = data.items.slice(0, 8);
+
+                container.innerHTML = items.map(item => `
+                    <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover cursor-pointer"
+                         data-category="${item.category}"
+                         data-id="${item.id}">
+                        <img src="${item.url}"
+                             alt="${item.title}"
+                             class="w-full h-full object-cover"
+                             loading="lazy"
+                             onclick="openLightbox('${item.url}', '${item.title}')">
+                    </div>
+                `).join('');
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки портфолио:', error);
+        });
+
+    // Инициализация слайдера отзывов
+    initTestimonialSlider();
+});
+</script>
+{% endblock %}

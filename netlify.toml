@@ -1,0 +1,12 @@
+[build]
+  command = "python -m pip install -r requirements.txt && python init_db.py"
+  publish = "."
+  functions = "functions"
+
+[context.production]
+  environment = { FLASK_ENV = "production" }
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

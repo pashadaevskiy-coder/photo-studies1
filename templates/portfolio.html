@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block title %}PHOTO STUDIES - Портфолио{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="py-20 md:py-32 px-4 bg-cream">
+    <div class="max-w-7xl mx-auto text-center">
+        <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 reveal">Наши работы</h1>
+        <p class="text-text-light text-lg md:text-xl max-w-2xl mx-auto reveal">
+            Подборка лучших фотографий из наших фотосессий. Каждый кадр — это история, которую мы помогли рассказать.
+        </p>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="py-12 md:py-20 px-4 bg-white">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Filters -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12 reveal" id="filters">
+            <button class="filter-btn active px-6 py-2.5 rounded-full bg-accent text-white font-medium transition-all" data-filter="all">
+                Все
+            </button>
+            <button class="filter-btn px-6 py-2.5 rounded-full bg-cream text-text border border-gray-200 hover:bg-accent hover:text-white transition-all" data-filter="individual">
+                Индивидуальные
+            </button>
+            <button class="filter-btn px-6 py-2.5 rounded-full bg-cream text-text border border-gray-200 hover:bg-accent hover:text-white transition-all" data-filter="love">
+                Love Story
+            </button>
+            <button class="filter-btn px-6 py-2.5 rounded-full bg-cream text-text border border-gray-200 hover:bg-accent hover:text-white transition-all" data-filter="family">
+                Семейные
+            </button>
+        </div>
+
+        <!-- Portfolio Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="portfolio-grid">
+            <!-- Portfolio items will be loaded via JS -->
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+            <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover bg-gray-200 animate-pulse"></div>
+        </div>
+
+        <!-- No results message -->
+        <div id="no-results" class="hidden text-center py-12">
+            <p class="text-text-light text-lg">Фотографии в этой категории пока отсутствуют</p>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <div class="relative max-w-6xl mx-auto p-4 w-full h-full flex items-center justify-center">
+        <!-- Close button -->
+        <button onclick="closeLightbox(event)" class="absolute top-4 right-4 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-label="Закрыть">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- Navigation buttons -->
+        <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-label="Предыдущее">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+        <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all" aria-label="Следующее">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+
+        <!-- Image -->
+        <div class="relative w-full h-full flex items-center justify-center">
+            <img id="lightbox-image" src="" alt="" class="max-w-full max-h-full object-contain animate-fade-in">
+        </div>
+
+        <!-- Image info -->
+        <div id="lightbox-info" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-sm text-white px-6 py-3 rounded-full text-sm">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Глобальные переменные для lightbox
+let currentLightboxIndex = 0;
+let filteredItems = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Загрузка портфолио
+    fetch('/api/portfolio')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.items) {
+                filteredItems = data.items;
+                renderPortfolio(filteredItems);
+                initTestimonialSlider(); // из base.html
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки портфолио:', error);
+        });
+
+    // Инициализация фильтров
+    initFilters();
+});
+
+/**
+ * Отрисовка портфолио
+ */
+function renderPortfolio(items) {
+    const grid = document.getElementById('portfolio-grid');
+    const noResults = document.getElementById('no-results');
+
+    if (items.length === 0) {
+        grid.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+    }
+
+    noResults.classList.add('hidden');
+
+    grid.innerHTML = items.map((item, index) => `
+        <div class="portfolio-item aspect-square rounded-xl overflow-hidden card-hover cursor-pointer"
+             data-category="${item.category}"
+             data-index="${index}"
+             onclick="openLightboxByIndex(${index})">
+            <img src="${item.url}"
+                 alt="${item.title}"
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+        </div>
+    `).join('');
+}
+
+/**
+ * Инициализация фильтров
+ */
+function initFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Убираем активный класс
+            filterBtns.forEach(b => {
+                b.classList.remove('active', 'bg-accent', 'text-white');
+                b.classList.add('bg-cream', 'text-text', 'border', 'border-gray-200');
+            });
+
+            // Добавляем активный класс текущей кнопке
+            this.classList.add('active', 'bg-accent', 'text-white');
+            this.classList.remove('bg-cream', 'text-text', 'border', 'border-gray-200');
+
+            // Фильтруем
+            const filter = this.dataset.filter;
+            filterPortfolio(filter);
+        });
+    });
+}
+
+/**
+ * Фильтрация портфолио
+ */
+function filterPortfolio(filter) {
+    fetch('/api/portfolio')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.items) {
+                if (filter === 'all') {
+                    filteredItems = data.items;
+                } else {
+                    filteredItems = data.items.filter(item => item.category === filter);
+                }
+                renderPortfolio(filteredItems);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка фильтрации:', error);
+        });
+}
+
+/**
+ * Открытие lightbox по индексу
+ */
+function openLightboxByIndex(index) {
+    if (filteredItems.length === 0) return;
+
+    currentLightboxIndex = index;
+    const item = filteredItems[index];
+
+    const lightbox = document.getElementById('lightbox');
+    const image = document.getElementById('lightbox-image');
+    const info = document.getElementById('lightbox-info');
+
+    image.src = item.url;
+    image.alt = item.title;
+    info.textContent = item.title;
+
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Блокируем скролл
+}
+
+/**
+ * Открытие lightbox (старая версия для совместимости)
+ */
+function openLightbox(url, title) {
+    const lightbox = document.getElementById('lightbox');
+    const image = document.getElementById('lightbox-image');
+    const info = document.getElementById('lightbox-info');
+
+    image.src = url;
+    image.alt = title;
+    info.textContent = title;
+
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Закрытие lightbox
+ */
+function closeLightbox(event) {
+    // Проверяем, что клик не по кнопкам навигации
+    if (event.target.closest('#lightbox-prev') || event.target.closest('#lightbox-next')) {
+        return;
+    }
+
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+/**
+ * Навигация в lightbox
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex - 1 + filteredItems.length) % filteredItems.length;
+            updateLightboxImage();
+        });
+
+        nextBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex + 1) % filteredItems.length;
+            updateLightboxImage();
+        });
+    }
+
+    // Закрытие по ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Навигация по стрелкам
+        if (e.key === 'ArrowLeft') {
+            currentLightboxIndex = (currentLightboxIndex - 1 + filteredItems.length) % filteredItems.length;
+            updateLightboxImage();
+        }
+        if (e.key === 'ArrowRight') {
+            currentLightboxIndex = (currentLightboxIndex + 1) % filteredItems.length;
+            updateLightboxImage();
+        }
+    });
+});
+
+/**
+ * Обновление изображения в lightbox
+ */
+function updateLightboxImage() {
+    if (filteredItems.length === 0) return;
+
+    const item = filteredItems[currentLightboxIndex];
+    const image = document.getElementById('lightbox-image');
+    const info = document.getElementById('lightbox-info');
+
+    // Анимация смены
+    image.style.opacity = '0';
+    setTimeout(() => {
+        image.src = item.url;
+        image.alt = item.title;
+        info.textContent = item.title;
+        image.style.opacity = '1';
+    }, 200);
+}
+</script>
+
+{% endblock %}

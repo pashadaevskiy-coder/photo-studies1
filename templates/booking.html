@@ -1,0 +1,339 @@
+{% extends "base.html" %}
+
+{% block title %}PHOTO STUDIES - Запись на фотосессию{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="py-20 md:py-32 px-4 bg-cream">
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 reveal">Запись на фотосессию</h1>
+        <p class="text-text-light text-lg md:text-xl reveal">
+            Заполните форму ниже, и мы свяжемся с вами для подтверждения записи
+        </p>
+    </div>
+</section>
+
+<!-- Booking Form Section -->
+<section class="py-12 md:py-20 px-4 bg-white">
+    <div class="max-w-3xl mx-auto">
+        <div class="bg-cream rounded-2xl p-8 md:p-12 shadow-lg reveal">
+
+            <form id="booking-form" novalidate>
+                <!-- Name -->
+                <div class="mb-6">
+                    <label for="name" class="block text-sm font-semibold mb-2">
+                        Имя <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           required
+                           class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all bg-white"
+                           placeholder="Введите ваше имя">
+                    <p class="text-red-500 text-sm mt-1 hidden" id="name-error"></p>
+                </div>
+
+                <!-- Phone -->
+                <div class="mb-6">
+                    <label for="phone" class="block text-sm font-semibold mb-2">
+                        Телефон <span class="text-red-500">*</span>
+                    </label>
+                    <input type="tel"
+                           id="phone"
+                           name="phone"
+                           required
+                           class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all bg-white"
+                           placeholder="+7 (999) 123-45-67">
+                    <p class="text-red-500 text-sm mt-1 hidden" id="phone-error"></p>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-semibold mb-2">
+                        Email <span class="text-red-500">*</span>
+                    </label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           required
+                           class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all bg-white"
+                           placeholder="example@mail.ru">
+                    <p class="text-red-500 text-sm mt-1 hidden" id="email-error"></p>
+                </div>
+
+                <!-- Service Type -->
+                <div class="mb-6">
+                    <label for="service" class="block text-sm font-semibold mb-2">
+                        Тип съёмки <span class="text-red-500">*</span>
+                    </label>
+                    <select id="service"
+                            name="service"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all bg-white">
+                        <option value="">Выберите тип съёмки</option>
+                        <option value="Индивидуальная">Индивидуальная съёмка</option>
+                        <option value="Love Story">Love Story</option>
+                        <option value="Семейная">Семейная съёмка</option>
+                        <option value="Портретная">Портретная съёмка</option>
+                        <option value="Событийная">Событийная съёмка</option>
+                        <option value="Беременная">Беременная фотосессия</option>
+                        <option value="Выпускной">Выпускной</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="service-error"></p>
+                </div>
+
+                <!-- Date -->
+                <div class="mb-6">
+                    <label for="date" class="block text-sm font-semibold mb-2">
+                        Предпочтительная дата <span class="text-red-500">*</span>
+                    </label>
+                    <input type="date"
+                           id="date"
+                           name="date"
+                           required
+                           min="{{ (today).strftime('%Y-%m-%d') }}"
+                           class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all bg-white">
+                    <p class="text-red-500 text-sm mt-1 hidden" id="date-error"></p>
+                </div>
+
+                <!-- Comment -->
+                <div class="mb-8">
+                    <label for="comment" class="block text-sm font-semibold mb-2">
+                        Комментарий
+                    </label>
+                    <textarea id="comment"
+                              name="comment"
+                              rows="4"
+                              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all bg-white resize-none"
+                              placeholder="Дополнительные пожелания, вопросы, детали..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        id="submit-btn"
+                        class="w-full py-4 bg-accent text-white rounded-full font-bold text-lg btn-hover flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="btn-text">Отправить заявку</span>
+                    <div id="btn-spinner" class="spinner hidden"></div>
+                </button>
+            </form>
+
+        </div>
+
+        <!-- Info Block -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+            <div class="text-center p-6">
+                <div class="w-12 h-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                </div>
+                <h3 class="font-semibold mb-2">Быстрый ответ</h3>
+                <p class="text-sm text-text-light">Мы свяжемся с вами в течение 2 часов</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="w-12 h-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-semibold mb-2">Гибкий график</h3>
+                <p class="text-sm text-text-light">Подберём удобное время для съёмки</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="w-12 h-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-semibold mb-2">Гарантия качества</h3>
+                <p class="text-sm text-text-light">Профессиональная обработка всех фотографий</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('booking-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+
+    // Устанавливаем минимальную дату (сегодня)
+    const dateInput = document.getElementById('date');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    // Валидация полей в реальном времени
+    const fields = ['name', 'phone', 'email', 'service', 'date'];
+
+    fields.forEach(fieldName => {
+        const input = document.getElementById(fieldName);
+        const errorEl = document.getElementById(`${fieldName}-error`);
+
+        input.addEventListener('blur', function() {
+            validateField(fieldName, input.value, errorEl);
+        });
+
+        input.addEventListener('input', function() {
+            // Скрываем ошибку при вводе
+            errorEl.classList.add('hidden');
+            input.classList.remove('border-red-500');
+        });
+    });
+
+    // Валидация email
+    function isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
+
+    // Валидация телефона
+    function isValidPhone(phone) {
+        const phoneRegex = /^[\d\s\-\+\(\)]{10,20}$/;
+        return phoneRegex.test(phone);
+    }
+
+    // Валидация отдельного поля
+    function validateField(fieldName, value, errorEl) {
+        let error = '';
+
+        if (!value.trim()) {
+            error = 'Это поле обязательно';
+        } else {
+            switch (fieldName) {
+                case 'email':
+                    if (!isValidEmail(value)) {
+                        error = 'Введите корректный email';
+                    }
+                    break;
+                case 'phone':
+                    if (!isValidPhone(value)) {
+                        error = 'Введите корректный телефон';
+                    }
+                    break;
+                case 'date':
+                    // Проверяем, что дата не в прошлом
+                    const selectedDate = new Date(value);
+                    const todayDate = new Date();
+                    todayDate.setHours(0, 0, 0, 0);
+                    if (selectedDate < todayDate) {
+                        error = 'Выберите дату в будущем';
+                    }
+                    break;
+            }
+        }
+
+        if (error) {
+            errorEl.textContent = error;
+            errorEl.classList.remove('hidden');
+            return false;
+        } else {
+            errorEl.classList.add('hidden');
+            return true;
+        }
+    }
+
+    // Отправка формы
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Валидация всех полей
+        let isValid = true;
+        fields.forEach(fieldName => {
+            const input = document.getElementById(fieldName);
+            const errorEl = document.getElementById(`${fieldName}-error`);
+            if (!validateField(fieldName, input.value, errorEl)) {
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            showToast('Пожалуйста, исправьте ошибки в форме', 'error');
+            return;
+        }
+
+        // Собираем данные
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            email: document.getElementById('email').value.trim().toLowerCase(),
+            service: document.getElementById('service').value,
+            date: document.getElementById('date').value,
+            comment: document.getElementById('comment').value.trim()
+        };
+
+        // Показываем loading
+        submitBtn.disabled = true;
+        btnText.textContent = 'Отправка...';
+        btnSpinner.classList.remove('hidden');
+
+        try {
+            const response = await fetch('/api/booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                // Успех
+                showToast('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.', 'success');
+                form.reset();
+            } else {
+                // Ошибка
+                const errorMsg = data.error || 'Произошла ошибка при отправке';
+                showToast(errorMsg, 'error');
+            }
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            showToast('Ошибка соединения с сервером', 'error');
+        } finally {
+            // Скрываем loading
+            submitBtn.disabled = false;
+            btnText.textContent = 'Отправить заявку';
+            btnSpinner.classList.add('hidden');
+        }
+    });
+
+    // Функция показа toast уведомлений
+    function showToast(message, type = 'success') {
+        // Удаляем существующие toast
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) {
+            existingToast.remove();
+        }
+
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+
+        document.body.appendChild(toast);
+
+        // Показываем
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+
+        // Автоматически скрываем через 5 секунд
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 5000);
+    }
+});
+</script>
+
+{% endblock %}
